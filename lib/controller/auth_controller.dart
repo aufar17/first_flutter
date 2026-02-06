@@ -25,10 +25,12 @@ class AuthController extends GetxController {
       password: password,
     );
 
-    isLoading.value = false;
+    isLoading.value = true;
 
     if (result.success) {
       isLoggedIn.value = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      isLoading.value = false;
       Get.snackbar(
         'Login Success',
         result.message,
