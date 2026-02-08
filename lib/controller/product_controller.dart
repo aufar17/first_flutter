@@ -19,14 +19,14 @@ class ProductController extends GetxController {
 
       final productModel = await productService.getProducts(limit: 10, skip: 0);
 
-      isLoading.value = false;
-
       if (productModel.products.isNotEmpty) {
         products.assignAll(productModel.products);
       }
     } catch (e) {
       isLoading.value = false;
       Get.snackbar('Error', e.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 }
