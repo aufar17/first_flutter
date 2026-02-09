@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class ProductService extends GetConnect {
   Future<ProductModel> getProducts({
-    int limit = 100,
+    int limit = 10,
     int skip = 0,
     String? category,
   }) async {

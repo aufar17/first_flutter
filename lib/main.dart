@@ -1,5 +1,6 @@
+import 'package:first_flutter/controller/auth_controller.dart';
 import 'package:first_flutter/controller/product_controller.dart';
-import 'package:first_flutter/pages/homepage.dart';
+import 'package:first_flutter/views/pages/authentication/login.dart';
 import 'package:first_flutter/services/auth.service.dart';
 import 'package:first_flutter/services/product.service.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ void main() {
   Get.put(ProductService());
   Get.put(ProductController());
   Get.put(AuthService());
+  Get.put(AuthController());
   runApp(const MainApp());
 }
 
@@ -17,10 +19,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       title: 'EPM APP',
       debugShowCheckedModeBanner: false,
-      home: Homepage(),
+      home: const Login(),
     );
   }
 }

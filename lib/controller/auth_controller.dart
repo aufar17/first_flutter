@@ -1,4 +1,4 @@
-import 'package:first_flutter/pages/homepage.dart';
+import 'package:first_flutter/views/pages/homepage.dart';
 import 'package:first_flutter/services/auth.service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,6 +42,7 @@ class AuthController extends GetxController {
       );
       Get.offAll(() => const Homepage());
     } else {
+      isLoading.value = false;
       Get.snackbar(
         'Gagal',
         result.message,

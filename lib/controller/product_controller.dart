@@ -17,7 +17,7 @@ class ProductController extends GetxController {
   var isCategoryLoading = false.obs;
   final isEmptyCategory = false.obs;
 
-  int limit = 20;
+  int limit = 10;
   int skip = 0;
   bool hasMore = true;
 
@@ -60,7 +60,6 @@ class ProductController extends GetxController {
       );
 
       final orm = productModel.products;
-
 
       if (orm.isEmpty && skip == 0) {
         isEmptyCategory.value = true;
