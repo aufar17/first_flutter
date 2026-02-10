@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class AuthService extends GetxService {
   final String tusername = 'aufar';
   final String tpassword = 'admin123';
+  
 
   Future<AuthResponse> login({
     required String username,

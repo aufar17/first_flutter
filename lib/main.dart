@@ -1,12 +1,15 @@
 import 'package:first_flutter/controller/auth_controller.dart';
 import 'package:first_flutter/controller/product_controller.dart';
-import 'package:first_flutter/views/pages/authentication/login.dart';
+import 'package:first_flutter/middleware/check_session.dart';
 import 'package:first_flutter/services/auth.service.dart';
 import 'package:first_flutter/services/product.service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
+
   Get.put(ProductService());
   Get.put(ProductController());
   Get.put(AuthService());
@@ -22,7 +25,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'EPM APP',
       debugShowCheckedModeBanner: false,
-      home: const Login(),
+      home: CheckSession(),
     );
   }
 }

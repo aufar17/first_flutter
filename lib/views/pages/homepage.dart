@@ -1,3 +1,4 @@
+import 'package:first_flutter/controller/auth_controller.dart';
 import 'package:first_flutter/controller/product_controller.dart';
 import 'package:first_flutter/views/components/product_card.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,8 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProductController());
+    final productController = Get.put(ProductController());
+    final authController = Get.find<AuthController>();
     final width = MediaQuery.of(context).size.width;
 
     int crossAxisCount;
@@ -42,6 +44,19 @@ class Homepage extends StatelessWidget {
               style: GoogleFonts.rosario(
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
+              ),
+            ),
+            const Spacer(),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  authController.logout();
+                },
+                icon: Icon(Icons.logout, color: Colors.red),
               ),
             ),
           ],
@@ -89,12 +104,12 @@ class Homepage extends StatelessWidget {
                         isExpanded: true,
                         underline: const SizedBox(),
                         hint: const Text('All Categories'),
-                        value: controller.selectedCategory.value.isEmpty
+                        value: productController.selectedCategory.value.isEmpty
                             ? null
-                            : controller.selectedCategory.value,
+                            : productController.selectedCategory.value,
                         items: [
                           const DropdownMenuItem(value: '', child: Text('All')),
-                          ...controller.categories.map(
+                          ...productController.categories.map(
                             (c) => DropdownMenuItem(
                               value: c.slug,
                               child: Text(c.name),
@@ -103,7 +118,7 @@ class Homepage extends StatelessWidget {
                         ],
                         onChanged: (value) {
                           if (value != null) {
-                            controller.changeCategory(value);
+                            productController.changeCategory(value);
                           }
                         },
                       );
@@ -118,11 +133,11 @@ class Homepage extends StatelessWidget {
 
           Expanded(
             child: Obx(() {
-              if (controller.isLoading.value) {
+              if (productController.isLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               }
 
-              if (controller.isEmptyCategory.value) {
+              if (productController.isEmptyCategory.value) {
                 return Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -146,12 +161,12 @@ class Homepage extends StatelessWidget {
               }
 
               return GridView.builder(
-                controller: controller.scrollController,
+                controller: productController.scrollController,
                 padding: const EdgeInsets.all(20),
                 cacheExtent: 500,
                 itemCount:
-                    controller.products.length +
-                    (controller.isMoreLoading.value ? 1 : 0),
+                    productController.products.length +
+                    (productController.isMoreLoading.value ? 1 : 0),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
                   crossAxisSpacing: 16,
@@ -159,13 +174,13 @@ class Homepage extends StatelessWidget {
                   childAspectRatio: aspectRatio,
                 ),
                 itemBuilder: (context, index) {
-                  if (index == controller.products.length) {
+                  if (index == productController.products.length) {
                     return const Center(
                       child: CircularProgressIndicator(strokeWidth: 2),
                     );
                   }
 
-                  final product = controller.products[index];
+                  final product = productController.products[index];
 
                   return ProductCard(product: product);
                 },

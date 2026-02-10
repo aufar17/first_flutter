@@ -20,7 +20,7 @@ class LoginLargePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Products System'.toUpperCase(),
+                'Epm System'.toUpperCase(),
                 style: GoogleFonts.rosario(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,

@@ -1,12 +1,21 @@
+import 'package:first_flutter/views/pages/authentication/login.dart';
 import 'package:first_flutter/views/pages/homepage.dart';
 import 'package:first_flutter/services/auth.service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AuthController extends GetxController {
   var isShow = true.obs;
   var isLoading = false.obs;
   var isLoggedIn = false.obs;
+  final session = GetStorage();
+
+  @override
+  void onInit() {
+    super.onInit();
+    isLoggedIn.value = session.read('isLoggedIn') ?? false;
+  }
 
   void showPassword() {
     isShow.value = !isShow.value;
@@ -25,9 +34,11 @@ class AuthController extends GetxController {
       password: password,
     );
 
-    isLoading.value = true;
+    isLoading.value = false;
 
     if (result.success) {
+      session.write('isLoggedIn', true);
+      session.write('username', username);
       isLoggedIn.value = true;
       await Future.delayed(const Duration(milliseconds: 500));
       isLoading.value = false;
@@ -53,5 +64,11 @@ class AuthController extends GetxController {
         duration: const Duration(seconds: 3),
       );
     }
+  }
+
+  void logout() {
+    session.erase();
+    isLoggedIn.value = false;
+    Get.offAll(() => const Login());
   }
 }
